@@ -1,0 +1,43 @@
+<html>
+
+<head>
+
+    <title>Lever | Careers </title>
+
+    <meta name="description" content="Join us at Lever." />
+
+    <link rel="stylesheet" href="index.css">
+
+</head>
+
+<body>
+
+    <div class="content">
+        <div id="jobs-list" v-cloak>
+            <div class="spinner" v-if="isLoading">
+                Loading...
+            </div>
+
+            <div class="team" v-for="team in teamJobs">
+                <div class="team-name">{{team.name}}</div>
+                <div class="job" v-for="item in team.items">
+                    <a class="apply-button" :href="item.hostedUrl">APPLY</a>
+                    <a :href="item.hostedUrl">
+                        <div class="job-title">{{ item.text }}</div>
+                        <div class="job-categories">
+                            {{ item.categories.location }} &middot; {{ item.categories.commitment }} &middot; {{ item.categories.team }}
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://unpkg.com/vue"></script>
+
+    <script defer src="index.js"></script>
+
+</body>
+
+</html>
