@@ -46,13 +46,82 @@ function main() {
             isLoading: true,
             // Example for json data at https://api.lever.co/v0/postings/lever?mode=json
             jobs: [],
+            setFilters: {},
         },
         computed: {
             teamJobs() {
                 return groupBy(this.jobs, function(job) {
                     return job.categories.team
                 });
-            }
+            },
+            filtersList() {
+                var filterNameToOptions = {};
+                for (var i = 0; i < this.jobs.length; i++) {
+                    var job = this.jobs[i];
+                    for (var category in job.categories) {
+                        //console.log('category', category);
+                        if (!filterNameToOptions[category]) {
+                            // Using an object to dedupe
+                            filterNameToOptions[category] = {};
+                        }
+                        var categoryValue = job.categories[category];
+                        filterNameToOptions[category][categoryValue] = true;
+                    }
+                }
+                var filters = [];
+                for (var name in filterNameToOptions) {
+                    var optionsList = [];
+                    for (var option in filterNameToOptions[name]) {
+                        optionsList.push(option);
+                    }
+                    if (optionsList.length <= 1) {
+                        // Single options don't need to be togglable because
+                        // the whole list would go away.
+                        continue;
+                    }
+                    filters.push({
+                        name: name,
+                        options: optionsList,
+                    });
+                }
+                return filters;
+            },
+            filteredJobs() {
+                var filtered = [];
+                var anyFilters = {};
+                for (var filter in this.setFilters) {
+                    var isSet = this.setFilters[filter];
+                    if (!isSet) {
+                        continue;
+                    }
+                    var parts = filter.split('<__>');
+                    var category = parts[0];
+                    var value = parts[1];
+                    anyFilters[category] = true;
+                }
+                for (var i = 0; i < this.jobs.length; i++) {
+                    var job = this.jobs[i];
+                    var isShown = true;
+                    for (var catName in job.categories) {
+                        if (!anyFilters[catName]) {
+                            // no filters set on this category, don't filter it.
+                            continue;
+                        }
+                        var value = job.categories[catName];
+                        var filterCode = catName + '<__>' + value;
+                        if (!this.setFilters[filterCode]) {
+                            isShown = false;
+                            break;
+                        }
+                    }
+                    if (isShown) {
+                        filtered.push(job);
+                    }
+                }
+                return groupBy(filtered, function(job) {
+                    return job.categories.team
+                });
+            },
         }
     });
 

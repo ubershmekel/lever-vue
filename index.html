@@ -18,7 +18,23 @@
                 Loading...
             </div>
 
-            <div class="team" v-for="team in teamJobs">
+            <table>
+                <tr class="filters" v-for="filterInfo in filtersList">
+                    <td class="filter-name">{{ filterInfo.name }}</td>
+                    <td class="filter-labels-container" v-for="filterOption in filterInfo.options">
+                        <label class="filter-label">
+                            <input type="checkbox" :id="filterInfo.name + filterOption"
+                            :name="filterInfo.name" :value="filterOption"
+                            v-model="setFilters[filterInfo.name + '<__>' + filterOption]"
+                            >
+                            {{filterOption}}
+                            <!--label :for="filterInfo.name + filterOption">{{filterOption}}</label-->
+                        </label>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="team" v-for="team in filteredJobs">
                 <div class="team-name">{{team.name}}</div>
                 <div class="job" v-for="item in team.items">
                     <a class="apply-button" :href="item.hostedUrl">APPLY</a>
