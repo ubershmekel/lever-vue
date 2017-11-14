@@ -2,7 +2,7 @@
 
 <head>
 
-    <title>Lever | Careers </title>
+    <title>Lever | Careers</title>
 
     <meta name="description" content="Join us at Lever." />
 
@@ -13,14 +13,14 @@
 <body>
 
     <div class="content">
-        <h2><a href="https://github.com/vuejs/vue">Vue</a> viewer for <a href="https://www.lever.co/">Lever</a></h2>
+        <h2><a href="https://github.com/vuejs/vue">Vue</a> viewer for <a href="https://www.lever.co/">Lever</a> source on <a href="https://github.com/ubershmekel/lever-vue">github</a></h2>
         <div id="jobs-list" v-cloak>
             <div class="spinner" v-if="isLoading">
                 Loading...
             </div>
 
-            <table>
-                <tr class="filters" v-for="filterInfo in filtersList">
+            <table class="filters-container">
+                <tr class="filters-row" v-for="filterInfo in filtersList">
                     <td class="filter-name">{{ filterInfo.name }}</td>
                     <td class="filter-labels-container" v-for="filterOption in filterInfo.options">
                         <label class="filter-label">
@@ -38,8 +38,8 @@
             <div class="team" v-for="team in filteredJobs">
                 <div class="team-name">{{team.name}}</div>
                 <div class="job" v-for="item in team.items">
-                    <a class="apply-button" :href="item.hostedUrl">APPLY</a>
                     <a class="job-link" :href="item.hostedUrl">
+                        <span class="apply-button" :href="item.hostedUrl">APPLY</span>
                         <div class="job-title">{{ item.text }}</div>
                         <div class="job-categories">
                             {{ item.categories.location }} &middot; {{ item.categories.commitment }} &middot; {{ item.categories.team }}

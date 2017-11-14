@@ -176,6 +176,10 @@ a:hover {
     cursor: pointer;
 }
 
-.filters td {
+.filters-row td {
     padding: 0 18px 8px 0px;
+}
+
+.filters-container {
+    margin-bottom: 2em;
 }
