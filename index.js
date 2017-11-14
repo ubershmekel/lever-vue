@@ -87,6 +87,7 @@ function main() {
                 return filters;
             },
             filteredJobs() {
+                // Get set filters, return filtered jobs
                 var filtered = [];
                 var anyFilters = {};
                 for (var filter in this.setFilters) {
@@ -119,7 +120,7 @@ function main() {
                     }
                 }
                 return groupBy(filtered, function(job) {
-                    return job.categories.team
+                    return job.categories.team;
                 });
             },
         }
