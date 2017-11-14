@@ -13,6 +13,7 @@
 <body>
 
     <div class="content">
+        <h2><a href="https://github.com/vuejs/vue">Vue</a> viewer for <a href="https://www.lever.co/">Lever</a></h2>
         <div id="jobs-list" v-cloak>
             <div class="spinner" v-if="isLoading">
                 Loading...
@@ -38,7 +39,7 @@
                 <div class="team-name">{{team.name}}</div>
                 <div class="job" v-for="item in team.items">
                     <a class="apply-button" :href="item.hostedUrl">APPLY</a>
-                    <a :href="item.hostedUrl">
+                    <a class="job-link" :href="item.hostedUrl">
                         <div class="job-title">{{ item.text }}</div>
                         <div class="job-categories">
                             {{ item.categories.location }} &middot; {{ item.categories.commitment }} &middot; {{ item.categories.team }}
